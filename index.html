@@ -3,226 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ôn Luyện Trắc Nghiệm - Tourism Translation</title>
+    <title>Tourism Translation - Full 49 Câu Trắc Nghiệm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      :root {
-        --primary: #2563eb;
-        --primary-hover: #1d4ed8;
-        --success: #16a34a;
-        --error: #dc2626;
-        --bg: #f8fafc;
-        --card-bg: #ffffff;
-        --text: #1e293b;
-        --subtext: #64748b;
-        --border: #e2e8f0;
+      .custom-scrollbar::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
       }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
       }
-
-      body {
-        background-color: var(--bg);
-        color: var(--text);
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        min-height: 100vh;
-      }
-
-      .container {
-        width: 100%;
-        max-width: 750px;
-        background: var(--card-bg);
-        padding: 24px;
-        border-radius: 16px;
-        box-shadow:
-          0 10px 25px -5px rgba(0, 0, 0, 0.05),
-          0 8px 10px -6px rgba(0, 0, 0, 0.01);
-      }
-
-      header {
-        margin-bottom: 20px;
-        border-bottom: 2px solid var(--border);
-        padding-bottom: 12px;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-        color: var(--primary);
-        margin-bottom: 8px;
-      }
-
-      .stats {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.9rem;
-        color: var(--subtext);
-        font-weight: 600;
-      }
-
-      .progress-bar-bg {
-        width: 100%;
-        height: 8px;
-        background: var(--border);
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
         border-radius: 4px;
-        margin-top: 10px;
-        overflow: hidden;
       }
-
-      .progress-bar-fill {
-        height: 100%;
-        width: 0%;
-        background: var(--primary);
-        transition: width 0.3s ease;
-      }
-
-      .quiz-card {
-        margin-bottom: 24px;
-      }
-      .q-number {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        color: var(--primary);
-        font-weight: 700;
-        margin-bottom: 4px;
-      }
-      .q-text {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 16px;
-        line-height: 1.4;
-      }
-
-      .options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .option-btn {
-        padding: 12px 16px;
-        border: 2px solid var(--border);
-        border-radius: 8px;
-        background: white;
-        text-align: left;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        color: var(--text);
-      }
-
-      .option-btn:hover:not(:disabled) {
-        border-color: var(--primary);
-        background: #eff6ff;
-      }
-
-      .option-btn.correct {
-        background-color: #dcfce7 !important;
-        border-color: var(--success) !important;
-        color: #14532d;
-        font-weight: 600;
-      }
-
-      .option-btn.incorrect {
-        background-color: #fee2e2 !important;
-        border-color: var(--error) !important;
-        color: #7f1d1d;
-      }
-
-      .explanation {
-        margin-top: 12px;
-        padding: 12px;
-        background: #f1f5f9;
-        border-left: 4px solid var(--primary);
-        border-radius: 4px;
-        font-size: 0.9rem;
-        display: none;
-      }
-
-      .controls {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-      }
-
-      .btn {
-        padding: 10px 20px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      .btn:hover {
-        background: var(--primary-hover);
-      }
-      .btn:disabled {
-        background: var(--subtext);
-        cursor: not-allowed;
-        opacity: 0.6;
-      }
-
-      .summary-screen {
-        text-align: center;
-        padding: 20px 0;
-        display: none;
-      }
-      .summary-screen h2 {
-        color: var(--success);
-        margin-bottom: 12px;
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #475569;
       }
     </style>
   </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Học Trắc Nghiệm - Dịch Thuật Du Lịch</h1>
-        <div class="stats">
-          <span id="batch-info">Lượt 1 (5 câu)</span>
-          <span id="mastered-info">Đã thuộc: 0 / 0</span>
+  <body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200 flex flex-col font-sans"
+  >
+    <!-- HEADER -->
+    <header
+      class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm"
+    >
+      <div
+        class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i
+            class="fa-solid fa-graduation-cap text-brand-600 dark:text-brand-400 text-2xl"
+          ></i>
+          <h1
+            class="font-bold text-lg md:text-xl text-slate-900 dark:text-white"
+          >
+            Tourism Translation (49 Câu)
+          </h1>
         </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-fill"></div>
-        </div>
-      </header>
+        <button
+          id="themeToggle"
+          class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition"
+        >
+          <i id="themeIcon" class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
 
-      <div id="quiz-area">
-        <div class="quiz-card">
-          <div class="q-number" id="q-number">Câu hỏi 1/5</div>
-          <div class="q-text" id="q-text">Loading...</div>
-          <div class="options" id="options"></div>
-          <div class="explanation" id="explanation"></div>
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl mx-auto px-4 py-6 flex-1 w-full">
+      <div id="quizApp" class="space-y-5">
+        <!-- HEADER THỐNG KÊ & TIẾN ĐỘ -->
+        <div
+          class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-3"
+        >
+          <div>
+            <h2 class="font-bold text-slate-900 dark:text-white">
+              Ôn Tập Tổng Hợp
+            </h2>
+            <p
+              id="questionCounter"
+              class="text-xs text-slate-500 dark:text-slate-400"
+            >
+              Câu 1 / 49
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span
+              id="scoreBadge"
+              class="hidden text-xs font-semibold px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800"
+            >
+              Đúng: <span id="scoreText">0/49</span>
+            </span>
+            <button
+              id="resetBtn"
+              class="text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+            >
+              <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại từ đầu
+            </button>
+          </div>
         </div>
-        <div class="controls">
-          <button class="btn" id="next-btn" disabled onclick="nextQuestion()">
-            Câu Tiếp Theo
+
+        <!-- DANH SÁCH LƯỚI 49 CÂU HỎI -->
+        <div
+          class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700"
+        >
+          <div
+            class="text-xs text-slate-400 dark:text-slate-500 mb-2 font-medium"
+          >
+            Danh sách câu hỏi (Click để chuyển nhanh):
+          </div>
+          <div
+            id="questionGrid"
+            class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto custom-scrollbar p-1"
+          >
+            <!-- 49 nút câu hỏi được tạo tự động bằng JS -->
+          </div>
+        </div>
+
+        <div id="questionAnchor" class="scroll-mt-20"></div>
+
+        <!-- CARD HỎI ĐÁP -->
+        <div
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 md:p-6 transition-all"
+        >
+          <div
+            id="questionContent"
+            class="text-base md:text-lg font-semibold text-slate-900 dark:text-slate-100 mb-5 leading-relaxed"
+          >
+            <!-- Nội dung câu hỏi -->
+          </div>
+
+          <!-- CÁC PHƯƠNG ÁN CHỌN -->
+          <div id="optionsContainer" class="space-y-3">
+            <!-- Danh sách đáp án -->
+          </div>
+
+          <!-- GIẢI THÍCH / KẾT QUẢ -->
+          <div
+            id="explanationBox"
+            class="hidden mt-6 p-4 rounded-xl border text-sm leading-relaxed"
+          >
+            <!-- Giải thích câu hỏi -->
+          </div>
+        </div>
+
+        <!-- NÚT ĐIỀU HƯỚNG PREV / NEXT -->
+        <div class="flex justify-between items-center gap-3 pt-2">
+          <button
+            id="prevBtn"
+            class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Trước</span>
+          </button>
+
+          <button
+            id="nextBtn"
+            class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-medium shadow-sm disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2"
+          >
+            <span>Tiếp theo</span>
+            <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
       </div>
+    </main>
 
-      <div class="summary-screen" id="summary-area">
-        <h2 id="summary-title">Hoàn thành lượt học!</h2>
-        <p id="summary-desc" style="margin-bottom: 20px">
-          Bạn vừa hoàn thành một lượt. Chuẩn bị sang 5 câu tiếp theo.
-        </p>
-        <button class="btn" onclick="startNextBatch()">
-          Tiếp Tục Lượt Mới
-        </button>
-      </div>
-    </div>
+    <footer
+      class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4 text-center text-xs text-slate-500 dark:text-slate-400 mt-8"
+    >
+      Môn học: Tourism Translation • Full 49 Questions Interactive Test
+    </footer>
 
     <script>
-      // Dữ liệu câu hỏi từ file
-      const rawQuestions = [
-        // Practice Test 1
+      // TẤT CẢ 49 CÂU HỎI ĐƯỢC GÔM TRONGLẠI
+      const questions = [
+        // Practice Test 1 (1-5)
         {
           q: "Why is it essential for a translator to research the target language’s lexical content and syntax before beginning a translation project in the tourism field?",
           options: [
@@ -279,7 +241,7 @@
           exp: "Translation is not merely about transferring words but involves a complex interplay between language and culture.",
         },
 
-        // Practice Test 2
+        // Practice Test 2 (6-10)
         {
           q: "What challenge does a translator face when translating from European French to Canadian French in tourism content?",
           options: [
@@ -336,7 +298,7 @@
           exp: "Tools like literal translation, calque, and loan words are used in foreignization.",
         },
 
-        // Practice Test 3
+        // Practice Test 3 (11-15)
         {
           q: "Why must symbols, colors, and pictures be considered in translation?",
           options: [
@@ -393,7 +355,7 @@
           exp: "In Japan, white is traditionally associated with mourning.",
         },
 
-        // Practice Test 4
+        // Practice Test 4 (16-20)
         {
           q: "What is a potential drawback of using Google as a source of linguistic information?",
           options: [
@@ -450,7 +412,7 @@
           exp: "They reduce time required for research and simplify consultation.",
         },
 
-        // Midterm Test Part 1
+        // Midterm Test Part 1 (21-30)
         {
           q: "What is the main purpose of the “Neutralization” strategy in translation?",
           options: [
@@ -460,6 +422,7 @@
             "To add cultural context in the TL.",
           ],
           answer: 2,
+          exp: "Neutralization aims to simplify and generalize terms that are specific to the source culture.",
         },
         {
           q: "What does the term “closest natural equivalent” in Nida and Taber’s definition imply?",
@@ -470,6 +433,7 @@
             "Maintaining the exact structure of the source language",
           ],
           answer: 2,
+          exp: "It focuses on meaning and cultural naturalness rather than exact word structure.",
         },
         {
           q: "What is the main challenge in achieving perfect translation?",
@@ -480,6 +444,7 @@
             "The structural differences between languages.",
           ],
           answer: 1,
+          exp: "Greater cultural distance leads to more complex translation issues.",
         },
         {
           q: "Which of the following statements is true about the relationship between language and culture according to contemporary views?",
@@ -490,6 +455,7 @@
             "Language is an integral part of culture",
           ],
           answer: 3,
+          exp: "Modern views treat language and culture as inseparable elements.",
         },
         {
           q: "Which cultural factor must be considered when translating colors in tourism content?",
@@ -500,6 +466,7 @@
             "Colors should always be translated based on the source language.",
           ],
           answer: 1,
+          exp: "Colors carry different connotations across cultures.",
         },
         {
           q: "What does the “cultural borrowing” technique involve?",
@@ -510,6 +477,7 @@
             "Avoiding the source language’s influence",
           ],
           answer: 2,
+          exp: "Cultural borrowing takes terms directly from the SL without translation.",
         },
         {
           q: "According to Venuti, what is the main goal of foreignization in translation?",
@@ -520,6 +488,7 @@
             "To reproduce cultural specificity and preserve linguistic differences",
           ],
           answer: 3,
+          exp: "Foreignization preserves original cultural and linguistic characteristics.",
         },
         {
           q: "What is the impact of humor in translation?",
@@ -530,6 +499,7 @@
             "It is always translated word–for–word",
           ],
           answer: 0,
+          exp: "Humor depends heavily on cultural context and often doesn't translate directly.",
         },
         {
           q: "Which of the following strategies is considered the most “extreme” according to Hervey and Higgins?",
@@ -540,6 +510,7 @@
             "Calque",
           ],
           answer: 1,
+          exp: "Cultural transplantation adapts the entire environment to the target culture.",
         },
         {
           q: "What does the “Naturalization” strategy in translation involve according to Peter Newmark?",
@@ -550,9 +521,10 @@
             "Providing a detailed explanation of the SL word.",
           ],
           answer: 2,
+          exp: "Naturalization adapts SL words to TL phonetics and spelling norms.",
         },
 
-        // Midterm Test Part 2
+        // Midterm Test Part 2 (31-49)
         {
           q: "Why might electronic dictionaries be less expensive than hardcopy dictionaries?",
           options: [
@@ -562,6 +534,7 @@
             "They do not require paper, ink, or shipping.",
           ],
           answer: 3,
+          exp: "Lack of physical production and delivery costs makes them cheaper.",
         },
         {
           q: "What new perspective has emerged in cultural studies regarding the concept of culture?",
@@ -572,6 +545,7 @@
             "Culture functions unconsciously and harmoniously among people",
           ],
           answer: 0,
+          exp: "Cultural studies often view culture as an active ideological mechanism.",
         },
         {
           q: "What might cause difficulties for a translator during the translation process?",
@@ -582,6 +556,7 @@
             "Differences in cultural meanings",
           ],
           answer: 3,
+          exp: "Divergent cultural meanings create translation barriers.",
         },
         {
           q: "Which of the following is an example of a “Cultural Equivalent” in translation?",
@@ -592,6 +567,7 @@
             "Translating “Thanksgiving” as “Lễ Tạ ơn” in Vietnamese.",
           ],
           answer: 3,
+          exp: "Translating a cultural event with an equivalent target cultural term.",
         },
         {
           q: "How does the “Descriptive and Functional Equivalent” strategy work in translation?",
@@ -602,6 +578,7 @@
             "By describing the SL item’s physical attributes and its function in the TL.",
           ],
           answer: 3,
+          exp: "Combines explanation of what the item is and what it does.",
         },
         {
           q: "Why should translators consider customs and traditions when translating tourism content?",
@@ -612,6 +589,7 @@
             "To ensure translations are done more quickly.",
           ],
           answer: 1,
+          exp: "Prevents cultural misunderstandings and offense.",
         },
         {
           q: "What is essential for an effective cultural translation?",
@@ -622,6 +600,7 @@
             "Living in the source culture long enough to understand its customs",
           ],
           answer: 3,
+          exp: "Firsthand cultural experience provides deep understanding.",
         },
         {
           q: "What was the original meaning of “culture” in Europe until the eighteenth century?",
@@ -632,6 +611,7 @@
             "An ideal of what was considered civilized in a developed society",
           ],
           answer: 3,
+          exp: "Historically, culture referred to high civilization standards.",
         },
         {
           q: "According to Ward Goodenough’s definition, what is the primary component of a society’s culture?",
@@ -642,6 +622,7 @@
             "Behavioral patterns",
           ],
           answer: 0,
+          exp: "Goodenough defines culture as mental concepts and organization.",
         },
         {
           q: "What is a primary challenge when translating Cultural–Specific Items (CSIs)?",
@@ -652,6 +633,7 @@
             "Keeping the length of the target text the same as the source text",
           ],
           answer: 2,
+          exp: "CSIs carry connotations unique to their culture.",
         },
         {
           q: "According to Nida, what is more difficult for translators than linguistic differences?",
@@ -662,6 +644,7 @@
             "Formal differences",
           ],
           answer: 2,
+          exp: "Nida emphasized that cultural differences present greater hurdles than language structure.",
         },
         {
           q: "What is a common necessity even when using machine translation for a project?",
@@ -672,6 +655,7 @@
             "Ignoring the translation and starting from scratch.",
           ],
           answer: 1,
+          exp: "Post-editing by humans is essential to fix machine errors.",
         },
         {
           q: "What is the ‘cultural turn’ in translation studies?",
@@ -682,6 +666,7 @@
             "A shift from linguistic to cultural analysis in translation",
           ],
           answer: 3,
+          exp: "The cultural turn shifted focus from pure linguistics to cultural context.",
         },
         {
           q: "Which of the following best describes the relationship between translation and semiotics?",
@@ -692,6 +677,7 @@
             "Translation only involves the use of a dictionary and grammar.",
           ],
           answer: 1,
+          exp: "Translation interprets signs across systems, fitting into semiotics.",
         },
         {
           q: "What role does the “commissioner” or “initiator” play?",
@@ -702,6 +688,7 @@
             "The person who translates the text.",
           ],
           answer: 1,
+          exp: "The commissioner initiates the translation request.",
         },
         {
           q: "What is a key function of Computer–Assisted Translation (CAT) tools?",
@@ -712,6 +699,7 @@
             "Providing machine translation of source segments.",
           ],
           answer: 2,
+          exp: "CAT tools store previously translated segments in Translation Memories.",
         },
         {
           q: "How does culture affect translation in terms of global marketing campaigns?",
@@ -722,6 +710,7 @@
             "By reducing marketing efforts",
           ],
           answer: 0,
+          exp: "Names must be checked for negative cultural connotations.",
         },
         {
           q: "How does Lotman categorize literature and art in relation to language?",
@@ -732,6 +721,7 @@
             "As primary systems with no connection to language.",
           ],
           answer: 1,
+          exp: "Lotman defined literature/art as secondary modelling systems built on natural language.",
         },
         {
           q: "How do customs like public displays of affection affect translation?",
@@ -742,148 +732,256 @@
             "They may be inappropriate in some cultures",
           ],
           answer: 3,
+          exp: "Acceptability of public behaviors varies by culture.",
         },
       ];
 
-      // Quản lý trạng thái học
-      let totalQuestionsCount = rawQuestions.length;
-      let masterList = rawQuestions.map((q, idx) => ({ ...q, id: idx }));
+      // --- LOCAL STORAGE KEYS ---
+      const STORAGE_ANSWERS = "tourism_49q_answers";
 
-      // Queue chứa các câu cần làm
-      let pendingQueue = [...masterList];
-      let masteredSet = new Set();
+      // --- STATE MANAGEMENT ---
+      let currentQuestionIndex = 0;
+      let userAnswers = JSON.parse(localStorage.getItem(STORAGE_ANSWERS)) || {};
 
-      let currentBatch = [];
-      let currentBatchIdx = 0;
-      let roundCount = 1;
+      // DOM ELEMENTS
+      const questionCounter = document.getElementById("questionCounter");
+      const scoreBadge = document.getElementById("scoreBadge");
+      const scoreText = document.getElementById("scoreText");
+      const questionGrid = document.getElementById("questionGrid");
+      const questionContent = document.getElementById("questionContent");
+      const optionsContainer = document.getElementById("optionsContainer");
+      const explanationBox = document.getElementById("explanationBox");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const questionAnchor = document.getElementById("questionAnchor");
 
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+      function saveState() {
+        localStorage.setItem(STORAGE_ANSWERS, JSON.stringify(userAnswers));
+      }
+
+      // --- DARK MODE LOGIC ---
+      function initTheme() {
+        if (
+          localStorage.theme === "dark" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+          themeIcon.className = "fa-solid fa-sun";
+        } else {
+          document.documentElement.classList.remove("dark");
+          themeIcon.className = "fa-solid fa-moon";
         }
       }
 
-      function updateHeaderStats() {
-        document.getElementById("batch-info").innerText =
-          `Lượt ${roundCount} (${currentBatch.length} câu)`;
-        document.getElementById("mastered-info").innerText =
-          `Đã thuộc: ${masteredSet.size} / ${totalQuestionsCount}`;
-        const pct = (masteredSet.size / totalQuestionsCount) * 100;
-        document.getElementById("progress-fill").style.width = `${pct}%`;
-      }
-
-      function prepareNextBatch() {
-        if (pendingQueue.length === 0) {
-          showFinalVictory();
-          return;
+      themeToggle.addEventListener("click", () => {
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          localStorage.theme = "light";
+          themeIcon.className = "fa-solid fa-moon";
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.theme = "dark";
+          themeIcon.className = "fa-solid fa-sun";
         }
+      });
 
-        // Trộn lại các câu chưa thuộc và lấy tối đa 5 câu
-        shuffleArray(pendingQueue);
-        currentBatch = pendingQueue.slice(0, 5);
-        currentBatchIdx = 0;
-
-        document.getElementById("quiz-area").style.display = "block";
-        document.getElementById("summary-area").style.display = "none";
-
-        updateHeaderStats();
+      // --- APP INITIALIZATION ---
+      function initApp() {
+        initTheme();
+        renderQuestionGrid();
         renderQuestion();
+        updateScoreBadge();
       }
 
-      function renderQuestion() {
-        const qData = currentBatch[currentBatchIdx];
+      function scrollToQuestion() {
+        questionAnchor.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
 
-        document.getElementById("q-number").innerText =
-          `Câu hỏi ${currentBatchIdx + 1} / ${currentBatch.length}`;
-        document.getElementById("q-text").innerText = qData.q;
+      function renderQuestionGrid() {
+        questionGrid.innerHTML = "";
 
-        const optionsDiv = document.getElementById("options");
-        optionsDiv.innerHTML = "";
-
-        const expDiv = document.getElementById("explanation");
-        expDiv.style.display = "none";
-        expDiv.innerText = "";
-
-        document.getElementById("next-btn").disabled = true;
-
-        qData.options.forEach((optText, index) => {
+        questions.forEach((q, idx) => {
           const btn = document.createElement("button");
-          btn.className = "option-btn";
-          btn.innerText = `${String.fromCharCode(97 + index)}. ${optText}`;
-          btn.onclick = () => checkAnswer(index, btn);
-          optionsDiv.appendChild(btn);
+          const isSelected = idx === currentQuestionIndex;
+          const userAns = userAnswers[idx];
+
+          let bgClasses =
+            "bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600";
+
+          if (userAns !== undefined) {
+            const isCorrect = userAns === q.answer;
+            bgClasses = isCorrect
+              ? "bg-emerald-500 text-white border-emerald-600"
+              : "bg-rose-500 text-white border-rose-600";
+          }
+
+          if (isSelected) {
+            bgClasses +=
+              " ring-2 ring-brand-500 ring-offset-2 dark:ring-offset-slate-800 font-bold";
+          }
+
+          btn.className = `w-7 h-7 text-xs rounded-md border flex items-center justify-center transition shrink-0 ${bgClasses}`;
+          btn.textContent = idx + 1;
+          btn.addEventListener("click", () => {
+            currentQuestionIndex = idx;
+            renderQuestionGrid();
+            renderQuestion();
+            scrollToQuestion();
+          });
+          questionGrid.appendChild(btn);
         });
       }
 
-      function checkAnswer(selectedIndex, clickedBtn) {
-        const qData = currentBatch[currentBatchIdx];
-        const allOptionBtns = document.querySelectorAll(".option-btn");
+      function renderQuestion() {
+        const q = questions[currentQuestionIndex];
+        const savedAns = userAnswers[currentQuestionIndex];
+        const isAnswered = savedAns !== undefined;
 
-        // Vô hiệu hóa tất cả các nút
-        allOptionBtns.forEach((btn) => (btn.disabled = true));
+        questionCounter.textContent = `Câu ${currentQuestionIndex + 1} / ${questions.length}`;
+        questionContent.innerHTML = `<span class="text-brand-600 dark:text-brand-400 font-bold mr-1">Câu ${currentQuestionIndex + 1}:</span> ${q.q}`;
 
-        if (selectedIndex === qData.answer) {
-          clickedBtn.classList.add("correct");
-          // Nếu đúng: loại câu này khỏi danh sách chờ (pendingQueue)
-          pendingQueue = pendingQueue.filter((item) => item.id !== qData.id);
-          masteredSet.add(qData.id);
+        optionsContainer.innerHTML = "";
+        const labels = ["A", "B", "C", "D"];
+
+        q.options.forEach((optText, optIdx) => {
+          const optionDiv = document.createElement("div");
+          const isUserSelected = savedAns === optIdx;
+          const isCorrectOpt = optIdx === q.answer;
+
+          let stateClasses =
+            "border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-200";
+
+          if (isAnswered) {
+            if (isCorrectOpt) {
+              stateClasses =
+                "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-100 font-medium";
+            } else if (isUserSelected && !isCorrectOpt) {
+              stateClasses =
+                "border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-100 font-medium";
+            }
+          }
+
+          optionDiv.className = `p-3.5 rounded-xl border transition cursor-pointer flex items-start gap-3 ${stateClasses}`;
+
+          let statusIcon = "";
+          if (isAnswered) {
+            if (isCorrectOpt) {
+              statusIcon = `<i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400 mt-0.5"></i>`;
+            } else if (isUserSelected && !isCorrectOpt) {
+              statusIcon = `<i class="fa-solid fa-circle-xmark text-rose-600 dark:text-rose-400 mt-0.5"></i>`;
+            } else {
+              statusIcon = `<div class="w-4 h-4 rounded-full border border-slate-300 dark:border-slate-600 mt-0.5"></div>`;
+            }
+          } else {
+            statusIcon = `<div class="w-4 h-4 rounded-full border border-slate-300 dark:border-slate-600 mt-0.5"></div>`;
+          }
+
+          optionDiv.innerHTML = `
+                    ${statusIcon}
+                    <div class="flex-1 text-sm md:text-base leading-snug">
+                        <span class="font-bold mr-1">${labels[optIdx]}.</span> ${optText}
+                    </div>
+                `;
+
+          // Event: Click chọn phương án -> Tự lưu LocalStorage & kiểm tra luôn
+          optionDiv.addEventListener("click", () => {
+            userAnswers[currentQuestionIndex] = optIdx;
+            saveState();
+            renderQuestionGrid();
+            renderQuestion();
+            updateScoreBadge();
+          });
+
+          optionsContainer.appendChild(optionDiv);
+        });
+
+        if (isAnswered) {
+          explanationBox.classList.remove("hidden");
+          const isCorrect = savedAns === q.answer;
+          if (isCorrect) {
+            explanationBox.className =
+              "mt-6 p-4 rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 text-sm";
+            explanationBox.innerHTML = `
+                        <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-check"></i> Chính xác!
+                        </div>
+                        <div>${q.exp || "Đáp án đúng."}</div>
+                    `;
+          } else {
+            explanationBox.className =
+              "mt-6 p-4 rounded-xl border border-rose-300 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 text-sm";
+            explanationBox.innerHTML = `
+                        <div class="font-bold text-rose-700 dark:text-rose-400 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-xmark"></i> Chưa đúng!
+                        </div>
+                        <div class="mb-1"><strong>Đáp án đúng:</strong> ${labels[q.answer]}. ${q.options[q.answer]}</div>
+                        <div>${q.exp ? "<strong>Giải thích:</strong> " + q.exp : ""}</div>
+                    `;
+          }
         } else {
-          clickedBtn.classList.add("incorrect");
-          allOptionBtns[qData.answer].classList.add("correct");
-          // Nếu sai: giữ lại câu hỏi trong pendingQueue (sẽ lặp lại ở lượt sau)
+          explanationBox.classList.add("hidden");
         }
 
-        if (qData.exp) {
-          const expDiv = document.getElementById("explanation");
-          expDiv.innerText = "Giải thích: " + qData.exp;
-          expDiv.style.display = "block";
-        }
-
-        document.getElementById("next-btn").disabled = false;
-        updateHeaderStats();
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestionIndex === questions.length - 1;
       }
 
-      function nextQuestion() {
-        currentBatchIdx++;
-        if (currentBatchIdx < currentBatch.length) {
+      function updateScoreBadge() {
+        const answeredKeys = Object.keys(userAnswers);
+
+        if (answeredKeys.length > 0) {
+          let correctCount = 0;
+          answeredKeys.forEach((k) => {
+            if (userAnswers[k] === questions[k].answer) {
+              correctCount++;
+            }
+          });
+          scoreText.textContent = `${correctCount}/${questions.length}`;
+          scoreBadge.classList.remove("hidden");
+        } else {
+          scoreBadge.classList.add("hidden");
+        }
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (currentQuestionIndex > 0) {
+          currentQuestionIndex--;
+          renderQuestionGrid();
           renderQuestion();
-        } else {
-          showBatchSummary();
+          scrollToQuestion();
         }
-      }
+      });
 
-      function showBatchSummary() {
-        document.getElementById("quiz-area").style.display = "none";
-        document.getElementById("summary-area").style.display = "block";
-
-        const remain = pendingQueue.length;
-        if (remain > 0) {
-          document.getElementById("summary-title").innerText =
-            `Hoàn thành lượt ${roundCount}!`;
-          document.getElementById("summary-desc").innerText =
-            `Còn ${remain} câu chưa hoàn thành. Các câu làm sai sẽ được sắp xếp làm lại ở lượt sau.`;
-        } else {
-          showFinalVictory();
+      nextBtn.addEventListener("click", () => {
+        if (currentQuestionIndex < questions.length - 1) {
+          currentQuestionIndex++;
+          renderQuestionGrid();
+          renderQuestion();
+          scrollToQuestion();
         }
-      }
+      });
 
-      function startNextBatch() {
-        roundCount++;
-        prepareNextBatch();
-      }
+      resetBtn.addEventListener("click", () => {
+        if (
+          confirm(
+            "Bạn có chắc chắn muốn xóa hết tất cả các câu đã làm để ôn lại từ đầu?",
+          )
+        ) {
+          userAnswers = {};
+          saveState();
+          currentQuestionIndex = 0;
+          renderQuestionGrid();
+          renderQuestion();
+          updateScoreBadge();
+          scrollToQuestion();
+        }
+      });
 
-      function showFinalVictory() {
-        document.getElementById("quiz-area").style.display = "none";
-        document.getElementById("summary-area").style.display = "block";
-        document.getElementById("summary-title").innerText = "🎉 Chúc mừng!";
-        document.getElementById("summary-desc").innerText =
-          "Bạn đã hoàn thành và trả lời đúng tất cả các câu hỏi!";
-        document.querySelector("#summary-area button").style.display = "none";
-      }
-
-      // Khởi chạy
-      prepareNextBatch();
+      document.addEventListener("DOMContentLoaded", initApp);
     </script>
   </body>
 </html>
