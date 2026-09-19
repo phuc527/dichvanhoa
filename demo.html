@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ôn Luyện Trắc Nghiệm - Tourism Translation</title>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-hover: #1d4ed8;
+        --success: #16a34a;
+        --error: #dc2626;
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text: #1e293b;
+        --subtext: #64748b;
+        --border: #e2e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 750px;
+        background: var(--card-bg);
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow:
+          0 10px 25px -5px rgba(0, 0, 0, 0.05),
+          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      }
+
+      header {
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 12px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        color: var(--primary);
+        margin-bottom: 8px;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: var(--subtext);
+        font-weight: 600;
+      }
+
+      .progress-bar-bg {
+        width: 100%;
+        height: 8px;
+        background: var(--border);
+        border-radius: 4px;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .quiz-card {
+        margin-bottom: 24px;
+      }
+      .q-number {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .q-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        line-height: 1.4;
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .option-btn {
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        background: white;
+        text-align: left;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text);
+      }
+
+      .option-btn:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: #eff6ff;
+      }
+
+      .option-btn.correct {
+        background-color: #dcfce7 !important;
+        border-color: var(--success) !important;
+        color: #14532d;
+        font-weight: 600;
+      }
+
+      .option-btn.incorrect {
+        background-color: #fee2e2 !important;
+        border-color: var(--error) !important;
+        color: #7f1d1d;
+      }
+
+      .explanation {
+        margin-top: 12px;
+        padding: 12px;
+        background: #f1f5f9;
+        border-left: 4px solid var(--primary);
+        border-radius: 4px;
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn:hover {
+        background: var(--primary-hover);
+      }
+      .btn:disabled {
+        background: var(--subtext);
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      .summary-screen {
+        text-align: center;
+        padding: 20px 0;
+        display: none;
+      }
+      .summary-screen h2 {
+        color: var(--success);
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Học Trắc Nghiệm - Dịch Thuật Du Lịch</h1>
+        <div class="stats">
+          <span id="batch-info">Lượt 1 (5 câu)</span>
+          <span id="mastered-info">Đã thuộc: 0 / 0</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <div id="quiz-area">
+        <div class="quiz-card">
+          <div class="q-number" id="q-number">Câu hỏi 1/5</div>
+          <div class="q-text" id="q-text">Loading...</div>
+          <div class="options" id="options"></div>
+          <div class="explanation" id="explanation"></div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="next-btn" disabled onclick="nextQuestion()">
+            Câu Tiếp Theo
+          </button>
+        </div>
+      </div>
+
+      <div class="summary-screen" id="summary-area">
+        <h2 id="summary-title">Hoàn thành lượt học!</h2>
+        <p id="summary-desc" style="margin-bottom: 20px">
+          Bạn vừa hoàn thành một lượt. Chuẩn bị sang 5 câu tiếp theo.
+        </p>
+        <button class="btn" onclick="startNextBatch()">
+          Tiếp Tục Lượt Mới
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Dữ liệu câu hỏi từ file
+      const rawQuestions = [
+        // Practice Test 1
+        {
+          q: "Why is it essential for a translator to research the target language’s lexical content and syntax before beginning a translation project in the tourism field?",
+          options: [
+            "To avoid using slang in the translation.",
+            "To translate word–for–word from the source language",
+            "To understand the audience’s cultural context and language nuances.",
+            "To ensure the translation is completed faster.",
+          ],
+          answer: 2,
+          exp: "Understanding the target language's lexical content and syntax, as well as the cultural context, helps the translator produce a translation that resonates with the target audience.",
+        },
+        {
+          q: "According to Simon (1996), what issue does cultural studies introduce into translation?",
+          options: [
+            "Gender and cultural complexities",
+            "Ignoring cultural context",
+            "Linguistic precision",
+            "Formal equivalence",
+          ],
+          answer: 0,
+          exp: "Cultural studies focus on complexities like gender and culture in translation.",
+        },
+        {
+          q: "What strategy might a translator use for heavily culture–bound terms according to Newmark?",
+          options: [
+            "Substituting with scientific terms",
+            "Avoiding cultural references altogether",
+            "Leaving the word untranslated",
+            "Paraphrasing or coining new words",
+          ],
+          answer: 3,
+          exp: "Paraphrasing or coining new words helps handle cultural content.",
+        },
+        {
+          q: "How does the text define the role of a translator in communication?",
+          options: [
+            "An independent creator of new meanings.",
+            "An active agent familiar with both languages and cultures, helping to facilitate communication.",
+            "A neutral observer who only translates literal meanings.",
+            "A passive intermediary between sender and receiver.",
+          ],
+          answer: 1,
+          exp: "Translators as active agents who understand both languages and cultures and facilitate communication between them.",
+        },
+        {
+          q: "Which of the following best summarizes the main idea of the text?",
+          options: [
+            "Language and culture are deeply interconnected, and translation involves more than just linguistic transfer.",
+            "Social reality is independent of language and culture.",
+            "The primary function of language is to serve as a dictionary for translators.",
+            "Translation is purely about transferring words from one language to another.",
+          ],
+          answer: 0,
+          exp: "Translation is not merely about transferring words but involves a complex interplay between language and culture.",
+        },
+
+        // Practice Test 2
+        {
+          q: "What challenge does a translator face when translating from European French to Canadian French in tourism content?",
+          options: [
+            "Translating between these variations does not require any cultural adaptation.",
+            "Canadian French is considered more formal than European French.",
+            "The differences in usage and meaning must be considered to ensure accuracy.",
+            "There are no significant differences between European and Canadian French",
+          ],
+          answer: 2,
+          exp: "Although both dialects share the same language, there are important differences in vocabulary, syntax, and usage.",
+        },
+        {
+          q: "What does Chomsky’s idea of deep structure suggest about translation?",
+          options: [
+            "Language cannot be translated due to cultural differences.",
+            "Surface structure is the key to translation.",
+            "Translation is impossible between different languages.",
+            "Deep structure makes translation theoretically possible.",
+          ],
+          answer: 3,
+          exp: "Chomsky's deep structure theory supports the idea that translation is theoretically possible as it deals with universal ideas.",
+        },
+        {
+          q: "What does Katan (2009b) emphasize about a professional translator’s role?",
+          options: [
+            "Translators should provide literal translations without considering context",
+            "Translators should avoid intervening in the refraction between realities",
+            "Translators should mediate texts and control meaning",
+            "Translators need intercultural competence to perceive and handle differences",
+          ],
+          answer: 3,
+          exp: "Katan defines intercultural competence as the ability to perceive and handle differences.",
+        },
+        {
+          q: "Which of the following strategies is considered the most “extreme” according to Hervey and Higgins?",
+          options: [
+            "Cultural transplantation",
+            "Cultural borrowing",
+            "Calque",
+            "Neutralization",
+          ],
+          answer: 0,
+          exp: "Cultural transplantation is an extreme strategy where the entire concept is adapted.",
+        },
+        {
+          q: "Which translation tool is typically associated with foreignization?",
+          options: [
+            "Equivalence",
+            "Non–translation",
+            "Literal translation and calque",
+            "Omission",
+          ],
+          answer: 2,
+          exp: "Tools like literal translation, calque, and loan words are used in foreignization.",
+        },
+
+        // Practice Test 3
+        {
+          q: "Why must symbols, colors, and pictures be considered in translation?",
+          options: [
+            "Because they carry universal meanings",
+            "They should be replaced with words",
+            "They have different cultural and political implications",
+            "They have no effect on the translation process",
+          ],
+          answer: 2,
+          exp: "Symbols, colors, and images have varied meanings in different cultures.",
+        },
+        {
+          q: "What is the relationship between language and culture according to Humboldt?",
+          options: [
+            "Language precedes culture in importance.",
+            "Language is a static inventory of items.",
+            "Language is irrelevant to culture.",
+            "Language is dynamic and an expression of culture.",
+          ],
+          answer: 3,
+          exp: "Humboldt sees language as dynamic and an expression of culture and individuality.",
+        },
+        {
+          q: "What makes a translation more difficult?",
+          options: [
+            "When the translation purpose is clear",
+            "When the text is not related to cultural concepts",
+            "When the source text has simple vocabulary",
+            "When the source text is deeply embedded in its culture",
+          ],
+          answer: 3,
+          exp: "The more a text is deeply embedded in its culture, the more difficult it is to translate.",
+        },
+        {
+          q: "Why must customs and traditions be considered when translating?",
+          options: [
+            "To improve grammar",
+            "To avoid misinterpreting important events",
+            "To translate word–for–word",
+            "To use a formal tone",
+          ],
+          answer: 1,
+          exp: "Translators must understand cultural context to avoid misrepresenting key events.",
+        },
+        {
+          q: "What is the significance of white color in Japan?",
+          options: [
+            "It symbolizes success",
+            "It is associated with weddings",
+            "It represents mourning",
+            "It represents happiness",
+          ],
+          answer: 2,
+          exp: "In Japan, white is traditionally associated with mourning.",
+        },
+
+        // Practice Test 4
+        {
+          q: "What is a potential drawback of using Google as a source of linguistic information?",
+          options: [
+            "It requires advanced programming knowledge to use effectively.",
+            "It only shows results from non–native speakers.",
+            "It automatically filters out incorrect usages of terms.",
+            "It may display non–idiomatic or incorrect usages of terms due to the vast range of content online.",
+          ],
+          answer: 3,
+          exp: "Results from Google search may display non-idiomatic or incorrect usage.",
+        },
+        {
+          q: "What is one primary advantage of electronic dictionaries over hardcopy dictionaries?",
+          options: [
+            "They take up significantly less physical space than hardcopy dictionaries.",
+            "They are generally more expensive than hardcopy dictionaries.",
+            "They are more accurate than hardcopy dictionaries.",
+            "They require more storage space than hardcopy dictionaries.",
+          ],
+          answer: 0,
+          exp: "Electronic dictionaries occupy minimal physical space compared to hardcopy books.",
+        },
+        {
+          q: "What is a potential cost associated with using electronic dictionaries?",
+          options: [
+            "Purchasing a large bookshelf.",
+            "Buying additional hardcopy dictionaries.",
+            "Acquiring computer storage space.",
+            "Renting additional room space.",
+          ],
+          answer: 2,
+          exp: "Translators may need to acquire computer storage space for electronic dictionaries.",
+        },
+        {
+          q: "How do electronic dictionaries enhance the efficiency of research for translators?",
+          options: [
+            "By providing more comprehensive information than hardcopy dictionaries.",
+            "By linking directly to relevant terms and additional information.",
+            "By automatically translating entire documents.",
+            "By being more difficult to navigate than hardcopy dictionaries.",
+          ],
+          answer: 1,
+          exp: "Electronic dictionaries contain links to other relevant information, making research quicker.",
+        },
+        {
+          q: "What is a possible impact of using electronic dictionaries on a translator’s workflow?",
+          options: [
+            "Increased need for physical storage space.",
+            "Reduced time spent on research and increased ease of consultation.",
+            "Difficulty in finding specific terms.",
+            "Increased frustration due to complex navigation.",
+          ],
+          answer: 1,
+          exp: "They reduce time required for research and simplify consultation.",
+        },
+
+        // Midterm Test Part 1
+        {
+          q: "What is the main purpose of the “Neutralization” strategy in translation?",
+          options: [
+            "To create new idiomatic expressions in the TL",
+            "To make the translation more complex.",
+            "To simplify and generalize culturally specific terms.",
+            "To add cultural context in the TL.",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What does the term “closest natural equivalent” in Nida and Taber’s definition imply?",
+          options: [
+            "Translating the text word–for–word",
+            "Focusing solely on the lexical equivalence of words",
+            "Finding a natural equivalent that considers cultural relevance",
+            "Maintaining the exact structure of the source language",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is the main challenge in achieving perfect translation?",
+          options: [
+            "The translation skills of the translator.",
+            "The cultural distance between the source and target language texts.",
+            "The speed of translation.",
+            "The structural differences between languages.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Which of the following statements is true about the relationship between language and culture according to contemporary views?",
+          options: [
+            "Language only influences thought, not culture",
+            "Culture is irrelevant to translation",
+            "Language is completely separate from culture",
+            "Language is an integral part of culture",
+          ],
+          answer: 3,
+        },
+        {
+          q: "Which cultural factor must be considered when translating colors in tourism content?",
+          options: [
+            "The translator should create new color meanings for the target culture.",
+            "The color’s meaning can vary significantly between cultures.",
+            "Colors are universally perceived the same way.",
+            "Colors should always be translated based on the source language.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What does the “cultural borrowing” technique involve?",
+          options: [
+            "Rewriting the term in the target language entirely",
+            "Adapting foreign terms into a target language structure",
+            "Directly using a term from the source language in the target language",
+            "Avoiding the source language’s influence",
+          ],
+          answer: 2,
+        },
+        {
+          q: "According to Venuti, what is the main goal of foreignization in translation?",
+          options: [
+            "To create a clear, transparent style",
+            "To make the translation appear as an original text",
+            "To erase cultural differences",
+            "To reproduce cultural specificity and preserve linguistic differences",
+          ],
+          answer: 3,
+        },
+        {
+          q: "What is the impact of humor in translation?",
+          options: [
+            "It might not be appreciated or understood by the target audience",
+            "It should be removed entirely from translations",
+            "It is easily understood across all cultures",
+            "It is always translated word–for–word",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Which of the following strategies is considered the most “extreme” according to Hervey and Higgins?",
+          options: [
+            "Cultural borrowing",
+            "Cultural transplantation",
+            "Neutralization",
+            "Calque",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What does the “Naturalization” strategy in translation involve according to Peter Newmark?",
+          options: [
+            "Substituting the SL word with a TL cultural equivalent.",
+            "Completely omitting the SL word from the translation.",
+            "Adapting the SL word to TL spelling and pronunciation.",
+            "Providing a detailed explanation of the SL word.",
+          ],
+          answer: 2,
+        },
+
+        // Midterm Test Part 2
+        {
+          q: "Why might electronic dictionaries be less expensive than hardcopy dictionaries?",
+          options: [
+            "They are easier to use.",
+            "They are more widely available.",
+            "They have more advanced features.",
+            "They do not require paper, ink, or shipping.",
+          ],
+          answer: 3,
+        },
+        {
+          q: "What new perspective has emerged in cultural studies regarding the concept of culture?",
+          options: [
+            "Culture is viewed as an ideological force operating in society",
+            "Culture is a form of excellence achieved by society",
+            "Culture is a shared way of life possessed by a single group",
+            "Culture functions unconsciously and harmoniously among people",
+          ],
+          answer: 0,
+        },
+        {
+          q: "What might cause difficulties for a translator during the translation process?",
+          options: [
+            "Using online dictionaries",
+            "Rewriting the entire text",
+            "Similarity between the languages",
+            "Differences in cultural meanings",
+          ],
+          answer: 3,
+        },
+        {
+          q: "Which of the following is an example of a “Cultural Equivalent” in translation?",
+          options: [
+            "Retaining the word “pasta” in an English translation.",
+            "Using a footnote to explain “Diwali” in a translation.",
+            "Translating “meter” as “centimeter.”",
+            "Translating “Thanksgiving” as “Lễ Tạ ơn” in Vietnamese.",
+          ],
+          answer: 3,
+        },
+        {
+          q: "How does the “Descriptive and Functional Equivalent” strategy work in translation?",
+          options: [
+            "By directly translating the SL word without changes.",
+            "By substituting the SL word with a TL word of similar sound.",
+            "By using footnotes to describe the SL item.",
+            "By describing the SL item’s physical attributes and its function in the TL.",
+          ],
+          answer: 3,
+        },
+        {
+          q: "Why should translators consider customs and traditions when translating tourism content?",
+          options: [
+            "To replace cultural practices with those from the translator’s own culture",
+            "To avoid offending the target audience by misunderstanding cultural practices.",
+            "To make the content more humorous.",
+            "To ensure translations are done more quickly.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is essential for an effective cultural translation?",
+          options: [
+            "Translating word–for–word",
+            "Being able to paraphrase effectively",
+            "Following strict grammatical rules of the source language",
+            "Living in the source culture long enough to understand its customs",
+          ],
+          answer: 3,
+        },
+        {
+          q: "What was the original meaning of “culture” in Europe until the eighteenth century?",
+          options: [
+            "A shared way of life among communities",
+            "An ideological force in society",
+            "A systematic study of human behavior",
+            "An ideal of what was considered civilized in a developed society",
+          ],
+          answer: 3,
+        },
+        {
+          q: "According to Ward Goodenough’s definition, what is the primary component of a society’s culture?",
+          options: [
+            "Forms of things that people have in mind",
+            "Material objects",
+            "People’s emotions",
+            "Behavioral patterns",
+          ],
+          answer: 0,
+        },
+        {
+          q: "What is a primary challenge when translating Cultural–Specific Items (CSIs)?",
+          options: [
+            "Ensuring grammatical accuracy",
+            "Finding direct equivalents for all words in the target language",
+            "Managing cultural connotations that have no exact counterparts in the target language",
+            "Keeping the length of the target text the same as the source text",
+          ],
+          answer: 2,
+        },
+        {
+          q: "According to Nida, what is more difficult for translators than linguistic differences?",
+          options: [
+            "Syntax problems",
+            "Stylistic differences",
+            "Cultural differences",
+            "Formal differences",
+          ],
+          answer: 2,
+        },
+        {
+          q: "What is a common necessity even when using machine translation for a project?",
+          options: [
+            "Completely redoing the translation manually.",
+            "Post–editing the translation to correct inaccuracies.",
+            "Adding more complex language to enhance the translation.",
+            "Ignoring the translation and starting from scratch.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is the ‘cultural turn’ in translation studies?",
+          options: [
+            "An emphasis on literal translation",
+            "A focus on formal equivalence in translation",
+            "The use of only local equivalents",
+            "A shift from linguistic to cultural analysis in translation",
+          ],
+          answer: 3,
+        },
+        {
+          q: "Which of the following best describes the relationship between translation and semiotics?",
+          options: [
+            "Semiotics and translation are unrelated fields of study.",
+            "Translation is a central linguistic activity that properly belongs to semiotics.",
+            "Translation is purely a linguistic activity with no relation to semiotics.",
+            "Translation only involves the use of a dictionary and grammar.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What role does the “commissioner” or “initiator” play?",
+          options: [
+            "The audience for whom the translation is intended.",
+            "The individual or entity requesting the translation, often with specific communicative purposes.",
+            "The original author of the text.",
+            "The person who translates the text.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is a key function of Computer–Assisted Translation (CAT) tools?",
+          options: [
+            "Automatically translating entire documents without human input.",
+            "Replacing human translators in the translation process.",
+            "Creating translation memories that store the translator’s choices.",
+            "Providing machine translation of source segments.",
+          ],
+          answer: 2,
+        },
+        {
+          q: "How does culture affect translation in terms of global marketing campaigns?",
+          options: [
+            "By considering the connotation of product names",
+            "By changing product prices",
+            "By translating words word–for–word",
+            "By reducing marketing efforts",
+          ],
+          answer: 0,
+        },
+        {
+          q: "How does Lotman categorize literature and art in relation to language?",
+          options: [
+            "As primary modelling systems independent of language.",
+            "As secondary modelling systems derived from language.",
+            "As unrelated to language or culture.",
+            "As primary systems with no connection to language.",
+          ],
+          answer: 1,
+        },
+        {
+          q: "How do customs like public displays of affection affect translation?",
+          options: [
+            "They have no impact on translation",
+            "They are universally accepted",
+            "They always enhance the translation",
+            "They may be inappropriate in some cultures",
+          ],
+          answer: 3,
+        },
+      ];
+
+      // Quản lý trạng thái học
+      let totalQuestionsCount = rawQuestions.length;
+      let masterList = rawQuestions.map((q, idx) => ({ ...q, id: idx }));
+
+      // Queue chứa các câu cần làm
+      let pendingQueue = [...masterList];
+      let masteredSet = new Set();
+
+      let currentBatch = [];
+      let currentBatchIdx = 0;
+      let roundCount = 1;
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      function updateHeaderStats() {
+        document.getElementById("batch-info").innerText =
+          `Lượt ${roundCount} (${currentBatch.length} câu)`;
+        document.getElementById("mastered-info").innerText =
+          `Đã thuộc: ${masteredSet.size} / ${totalQuestionsCount}`;
+        const pct = (masteredSet.size / totalQuestionsCount) * 100;
+        document.getElementById("progress-fill").style.width = `${pct}%`;
+      }
+
+      function prepareNextBatch() {
+        if (pendingQueue.length === 0) {
+          showFinalVictory();
+          return;
+        }
+
+        // Trộn lại các câu chưa thuộc và lấy tối đa 5 câu
+        shuffleArray(pendingQueue);
+        currentBatch = pendingQueue.slice(0, 5);
+        currentBatchIdx = 0;
+
+        document.getElementById("quiz-area").style.display = "block";
+        document.getElementById("summary-area").style.display = "none";
+
+        updateHeaderStats();
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        const qData = currentBatch[currentBatchIdx];
+
+        document.getElementById("q-number").innerText =
+          `Câu hỏi ${currentBatchIdx + 1} / ${currentBatch.length}`;
+        document.getElementById("q-text").innerText = qData.q;
+
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+
+        const expDiv = document.getElementById("explanation");
+        expDiv.style.display = "none";
+        expDiv.innerText = "";
+
+        document.getElementById("next-btn").disabled = true;
+
+        qData.options.forEach((optText, index) => {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.innerText = `${String.fromCharCode(97 + index)}. ${optText}`;
+          btn.onclick = () => checkAnswer(index, btn);
+          optionsDiv.appendChild(btn);
+        });
+      }
+
+      function checkAnswer(selectedIndex, clickedBtn) {
+        const qData = currentBatch[currentBatchIdx];
+        const allOptionBtns = document.querySelectorAll(".option-btn");
+
+        // Vô hiệu hóa tất cả các nút
+        allOptionBtns.forEach((btn) => (btn.disabled = true));
+
+        if (selectedIndex === qData.answer) {
+          clickedBtn.classList.add("correct");
+          // Nếu đúng: loại câu này khỏi danh sách chờ (pendingQueue)
+          pendingQueue = pendingQueue.filter((item) => item.id !== qData.id);
+          masteredSet.add(qData.id);
+        } else {
+          clickedBtn.classList.add("incorrect");
+          allOptionBtns[qData.answer].classList.add("correct");
+          // Nếu sai: giữ lại câu hỏi trong pendingQueue (sẽ lặp lại ở lượt sau)
+        }
+
+        if (qData.exp) {
+          const expDiv = document.getElementById("explanation");
+          expDiv.innerText = "Giải thích: " + qData.exp;
+          expDiv.style.display = "block";
+        }
+
+        document.getElementById("next-btn").disabled = false;
+        updateHeaderStats();
+      }
+
+      function nextQuestion() {
+        currentBatchIdx++;
+        if (currentBatchIdx < currentBatch.length) {
+          renderQuestion();
+        } else {
+          showBatchSummary();
+        }
+      }
+
+      function showBatchSummary() {
+        document.getElementById("quiz-area").style.display = "none";
+        document.getElementById("summary-area").style.display = "block";
+
+        const remain = pendingQueue.length;
+        if (remain > 0) {
+          document.getElementById("summary-title").innerText =
+            `Hoàn thành lượt ${roundCount}!`;
+          document.getElementById("summary-desc").innerText =
+            `Còn ${remain} câu chưa hoàn thành. Các câu làm sai sẽ được sắp xếp làm lại ở lượt sau.`;
+        } else {
+          showFinalVictory();
+        }
+      }
+
+      function startNextBatch() {
+        roundCount++;
+        prepareNextBatch();
+      }
+
+      function showFinalVictory() {
+        document.getElementById("quiz-area").style.display = "none";
+        document.getElementById("summary-area").style.display = "block";
+        document.getElementById("summary-title").innerText = "🎉 Chúc mừng!";
+        document.getElementById("summary-desc").innerText =
+          "Bạn đã hoàn thành và trả lời đúng tất cả các câu hỏi!";
+        document.querySelector("#summary-area button").style.display = "none";
+      }
+
+      // Khởi chạy
+      prepareNextBatch();
+    </script>
+  </body>
+</html>
